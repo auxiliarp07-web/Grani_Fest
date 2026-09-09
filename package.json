@@ -1,0 +1,37 @@
+{
+  "name": "grani-fest",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"next dev -p 3000\" \"node api/server.js\"",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "api": "node api/server.js",
+    "seed": "node scripts/seed.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "chart.js": "^4.4.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "express-rate-limit": "^7.4.1",
+    "express-validator": "^7.0.0",
+    "google-auth-library": "^9.13.0",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "next": "14.2.15",
+    "pg": "^8.23.0",
+    "react": "^18.3.1",
+    "react-chartjs-2": "^5.0.0",
+    "react-dom": "^18.3.1",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.0.1",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.13"
+  }
+}

@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #050816;
+  --foreground: #e5ecff;
+  --panel: rgba(12, 18, 33, 0.85);
+  --panel-border: rgba(96, 165, 250, 0.28);
+  --brand-50: #fef3c7;
+  --brand-500: #facc15;
+  --brand-600: #f59e0b;
+  --brand-700: #f43f5e;
+  --brand-800: #1d4ed8;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(29, 78, 216, 0.28), transparent 26%),
+    radial-gradient(circle at top right, rgba(244, 63, 94, 0.18), transparent 24%),
+    radial-gradient(circle at bottom center, rgba(250, 204, 21, 0.14), transparent 26%),
+    linear-gradient(135deg, #02050c 0%, #050816 28%, #090d1d 60%, #0a1020 100%);
+  color: var(--foreground);
+  min-height: 100vh;
+}
+
+body,
+body * {
+  box-sizing: border-box;
+}
+
+main,
+main * {
+  color: inherit;
+}
+
+.card {
+  @apply rounded-2xl border border-blue-500/20 bg-slate-900/80 text-slate-100 shadow-2xl shadow-blue-950/30 backdrop-blur;
+}
+
+.card input,
+.card textarea,
+.card select {
+  background: rgba(15, 23, 42, 0.92);
+  color: #e2e8f0;
+  border-color: rgba(148, 163, 184, 0.28);
+}
+
+.card input::placeholder,
+.card textarea::placeholder {
+  color: rgba(148, 163, 184, 0.85);
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 via-red-500 to-yellow-400 px-4 py-2 font-semibold text-white shadow-lg shadow-blue-900/40 transition hover:brightness-110;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center rounded-xl border border-slate-500/40 bg-slate-800/80 px-4 py-2 font-semibold text-white transition hover:border-yellow-400/40 hover:bg-slate-700;
+}
+
+main .text-slate-900,
+main .text-slate-800,
+main .text-slate-700,
+main .text-slate-600,
+main .text-slate-500,
+main .text-slate-400,
+main .text-slate-300,
+main .text-slate-200,
+main .text-slate-100 {
+  color: #e2e8f0 !important;
+}
+
+main .text-red-700,
+main .text-red-600,
+main .text-red-500 {
+  color: #fca5a5 !important;
+}
+
+main .text-green-700,
+main .text-green-600,
+main .text-green-500 {
+  color: #86efac !important;
+}
+
+main .text-orange-600,
+main .text-orange-700,
+main .text-orange-500,
+main .text-orange-400 {
+  color: #fdba74 !important;
+}
+
+main .bg-white\/80,
+main .bg-white,
+main .bg-slate-100\/90,
+main .bg-slate-50,
+main .bg-orange-50 {
+  background-color: rgba(15, 23, 42, 0.9) !important;
+}
+
+main .border-slate-200,
+main .border-orange-100,
+main .border-slate-500\/40,
+main .border-slate-500\/20,
+main .border-blue-500\/20 {
+  border-color: rgba(148, 163, 184, 0.26) !important;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+span,
+label,
+a,
+button,
+input,
+textarea,
+select {
+  color: inherit;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #090d1d;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.7), rgba(244, 63, 94, 0.7), rgba(250, 204, 21, 0.7));
+  border-radius: 9999px;
+}
