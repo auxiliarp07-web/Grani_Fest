@@ -400,10 +400,10 @@ app.get('/api/results/public', async (req, res) => {
     }
 
     const results = await pool.query(`
-      SELECT c.id, c.name, COUNT(v.id) AS votes
+      SELECT c.id, c.name, c.description, c.website, COUNT(v.id) AS votes
       FROM companies c
       LEFT JOIN votes v ON v.company_id = c.id
-      GROUP BY c.id, c.name
+      GROUP BY c.id, c.name, c.description, c.website
       ORDER BY votes DESC
     `);
 

@@ -42,9 +42,23 @@ export default function PublicBrandDetailPage({ params }) {
         <p className="mt-3 text-lg text-slate-300">Total actual de votos: <span className="font-bold text-orange-700">{brand.votes}</span></p>
 
         <div className="mt-8 rounded-2xl bg-slate-800/80 p-5">
-          <p className="text-sm uppercase tracking-[0.2em] text-orange-600">Resumen</p>
-          <p className="mt-2 text-slate-300">Esta marca cuenta con una participación activa en Grani Fest y está dentro del ranking público de votación.</p>
+          <p className="text-sm uppercase tracking-[0.2em] text-orange-600">Descripción</p>
+          <p className="mt-2 text-slate-300">{brand.description || 'Esta marca aún no tiene una descripción pública disponible.'}</p>
         </div>
+
+        {brand.website ? (
+          <div className="mt-6 rounded-2xl bg-slate-800/80 p-5">
+            <p className="text-sm uppercase tracking-[0.2em] text-orange-600">Sitio web</p>
+            <a
+              href={brand.website}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-2 inline-block break-all text-blue-400 underline hover:text-blue-300"
+            >
+              {brand.website}
+            </a>
+          </div>
+        ) : null}
 
         <div className="mt-8 flex gap-3">
           <Link href="/dashboard" className="btn-primary">Volver al ranking</Link>
