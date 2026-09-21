@@ -31,7 +31,7 @@ export default function DashboardPage() {
 
     const fetchData = async () => {
       try {
-        const res = await fetch(`${API_URL}/api/admin/companies`, {
+        const res = await fetch(`${API_URL}/api/companies`, {
           headers: { Authorization: `Bearer ${token}` }
         });
 

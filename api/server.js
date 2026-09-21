@@ -498,6 +498,15 @@ app.patch('/api/admin/users/:id/role', requireAuth('admin'), async (req, res) =>
   }
 });
 
+app.get('/api/companies', requireAuth('user'), async (req, res) => {
+  try {
+    const companies = await pool.query('SELECT * FROM companies ORDER BY created_at DESC');
+    return res.json({ companies: companies.rows });
+  } catch (error) {
+    return res.status(500).json({ error: 'Unable to fetch companies' });
+  }
+});
+
 app.get('/api/admin/companies', requireAuth('admin'), async (req, res) => {
   try {
     const companies = await pool.query('SELECT * FROM companies ORDER BY created_at DESC');
