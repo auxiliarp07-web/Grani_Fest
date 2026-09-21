@@ -10,6 +10,7 @@ export default function AdminDashboardPage() {
   const [users, setUsers] = useState([]);
   const [logs, setLogs] = useState([]);
   const [requests, setRequests] = useState([]);
+  const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState({ name: '', description: '', website: '' });
   const [token, setToken] = useState(() => {
@@ -21,22 +22,25 @@ export default function AdminDashboardPage() {
     if (!token) return; // wait until token is available
 
     try {
-      const [companiesRes, usersRes, auditRes, requestsRes] = await Promise.all([
+      const [companiesRes, usersRes, auditRes, requestsRes, resultsRes] = await Promise.all([
         fetch(`${API_URL}/api/admin/companies`, { headers: { Authorization: `Bearer ${token}` } }),
         fetch(`${API_URL}/api/admin/users`, { headers: { Authorization: `Bearer ${token}` } }),
         fetch(`${API_URL}/api/admin/audit`, { headers: { Authorization: `Bearer ${token}` } }),
-        fetch(`${API_URL}/api/admin/company-requests`, { headers: { Authorization: `Bearer ${token}` } })
+        fetch(`${API_URL}/api/admin/company-requests`, { headers: { Authorization: `Bearer ${token}` } }),
+        fetch(`${API_URL}/api/results/public`, { headers: { Authorization: `Bearer ${token}` } })
       ]);
 
       const companiesData = await companiesRes.json();
       const usersData = await usersRes.json();
       const auditData = await auditRes.json();
       const requestsData = await requestsRes.json();
+      const resultsData = await resultsRes.json();
 
       setCompanies(companiesData.companies || []);
       setUsers(usersData.users || []);
       setLogs(auditData.logs || []);
       setRequests(requestsData.requests || []);
+      setResults(resultsData.results || []);
     } catch (error) {
       console.error(error);
     } finally {
@@ -210,6 +214,45 @@ export default function AdminDashboardPage() {
                 </div>
               </section>
 
+              <section className="card p-6">
+                <div className="mb-4 flex items-center justify-between">
+                  <h2 className="text-xl font-bold text-slate-900">Ranking global</h2>
+                  <span className="rounded-full bg-orange-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-orange-700">
+                    Admin
+                  </span>
+                </div>
+
+                <div className="mb-6 grid gap-4 md:grid-cols-3">
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                    <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Participantes</p>
+                    <p className="mt-2 text-3xl font-black text-slate-900">{results.length}</p>
+                  </div>
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                    <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Total votos</p>
+                    <p className="mt-2 text-3xl font-black text-slate-900">{results.reduce((sum, item) => sum + Number(item.votes || 0), 0)}</p>
+                  </div>
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                    <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Líder</p>
+                    <p className="mt-2 text-2xl font-black text-slate-900">{results[0]?.name || '—'}</p>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  {results.map((company, index) => (
+                    <div key={company.id} className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 p-3">
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-orange-600 text-sm font-bold text-white">#{index + 1}</span>
+                        <div>
+                          <p className="font-semibold text-slate-900">{company.name}</p>
+                          <p className="text-xs text-slate-500">{company.description || 'Sin descripción'}</p>
+                        </div>
+                      </div>
+                      <span className="text-lg font-black text-orange-700">{company.votes || 0}</span>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
               <section className="grid gap-6 lg:grid-cols-2">
                 <div className="card p-6">
                   <h2 className="mb-4 text-xl font-bold text-slate-900">Solicitudes de participación</h2>
@@ -278,31 +321,6 @@ export default function AdminDashboardPage() {
               </section>
 
               <section className="grid gap-6 lg:grid-cols-2">
-                <div className="card p-6">
-                  <h2 className="mb-4 text-xl font-bold text-slate-900">Usuarios y roles</h2>
-                  <div className="space-y-3">
-                    {users.map((user) => (
-                      <div key={user.id} className="rounded-xl border border-slate-200 p-3">
-                        <div className="flex items-center justify-between gap-3">
-                          <div>
-                            <p className="font-semibold text-slate-900">{user.name || user.email}</p>
-                            <p className="text-xs text-slate-500">{user.email}</p>
-                          </div>
-                          <select
-                            defaultValue={user.role}
-                            onChange={(e) => updateRole(user.id, e.target.value, user.company_id)}
-                            className="rounded-lg border border-slate-200 bg-white px-2 py-2 text-sm"
-                          >
-                            <option value="user">user</option>
-                            <option value="brand">brand</option>
-                            <option value="admin">admin</option>
-                          </select>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
                 <div className="card p-6">
                   <h2 className="mb-4 text-xl font-bold text-slate-900">Auditoría</h2>
                   <div className="max-h-[420px] space-y-3 overflow-y-auto">

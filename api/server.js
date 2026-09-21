@@ -404,7 +404,7 @@ app.post(
   }
 );
 
-app.get('/api/results/public', async (req, res) => {
+app.get('/api/results/public', requireAuth('admin'), async (req, res) => {
   try {
     const now = Date.now();
     if (publicResultsCache.value && now < publicResultsCache.expiresAt) {
